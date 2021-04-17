@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spreadsheet</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+    button {
+    background-color: #dcdede;
+    padding: 2px 15px;
+    border-color: transparent;
+    margin-bottom: -5px;
+    margin-right: 1px;
+    }
+
+    .toolbar {
+    float: right;
+    background: #f7f7f7;
+    margin: 10px;
+    padding: 10px;
+    padding-bottom: 6px;
+    }
+
+    button.unlock {
+    width: 20px;
+    padding: 0px;
+    border-radius: 0px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    margin-left: 5px;
+    margin-right: 3px;
+    margin-bottom: 2px;
+    }
+    img {
+    width: 22px;
+    height: 22px;
+    }
+
+    </style>
+    <script type="text/javascript">
+        function check(field, flag) {
+        if (flag.checked==true) {
+        for (i=0; i<field.length; i++)
+        field[i].checked = true; }
+        else {
+        for (i=0; i<field.length; i++)
+        field[i].checked = false; }
+        }
+    </script>
+
+</head>
+<body>
+    <form th:action="@{/spreadsheet/__${id}__}" method="post" onreset="">
+        <div class="toolbar col-md-offset-3">
+            <button type="submit" th:name="button" value="block">Block</button>
+            <button class="unlock" type="submit" th:name="button" value="unlock"><img src="../images/unlock.png"></button>
+            <button class="unlock" type="submit" th:name="button" value="delete"><img src="../images/trash.png"></button>
+        </div>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">
+                    <input type="checkbox" name="checkAll" onclick="check(this.form.user, this.form.checkAll)">
+                </th>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Log in</th>
+                <th scope="col">Last sign in</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+                <div th:each="user : ${users}" >
+                <tr>
+                    <th>
+                        <input type="checkbox" th:name="user" th:value="${user.email}">
+                    </th>
+                    <th th:text="${user.id}"></th>
+                    <td th:text="${user.name}" ></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.signup}" ></td>
+                    <td th:text="${user.signin}" ></td>
+                    <td th:text="${user.status}" ></td>
+                </tr>
+            </div>
+            </tbody>
+        </table>
+    </form>
+</body>
+</html>
