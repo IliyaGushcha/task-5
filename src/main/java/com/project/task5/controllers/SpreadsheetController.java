@@ -24,7 +24,7 @@ public class SpreadsheetController {
             model.addAttribute("users", users);
             return "spreadsheet";
         } else
-            return "redirect:/signin";
+            return "redirect:/login";
     }
 
     @PostMapping("/spreadsheet/{id}")
@@ -57,8 +57,8 @@ public class SpreadsheetController {
             Iterable<Users> users = usersRepository.findAll();
             model.addAttribute("users", users);
             return usersRepository.findById(id).get().getStatus().equals("blocked")||
-                    !usersRepository.existsById(id)?"redirect:/signin":"spreadsheet";
-        } else return "redirect:/signin";
+                    !usersRepository.existsById(id)?"redirect:/login":"spreadsheet";
+        } else return "redirect:/login";
     }
 
 
